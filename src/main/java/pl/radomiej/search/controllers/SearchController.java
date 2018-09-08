@@ -113,6 +113,7 @@ public class SearchController {
 	public SearchResult reverseSearch(@PathVariable("latitude") double latitude,
 			@PathVariable("longitude") double longitude) {
 
+		//TODO move to constructor and check that it work
 		elasticsearchTemplate.createIndex(AddressNode.class);
 		elasticsearchTemplate.refresh(AddressNode.class);
 		elasticsearchTemplate.putMapping(AddressNode.class);

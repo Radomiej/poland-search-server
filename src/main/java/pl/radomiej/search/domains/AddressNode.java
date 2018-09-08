@@ -107,7 +107,7 @@ public class AddressNode {
 
 	@Override
 	public String toString() {
-		return "AddressNode [id=" + id + ", position=" + position + ", country=" + country + ", voivodeship="
+		return "AddressNode [id=" + id + ", position=[" + position.getLat() + "," + position.getLon() + "], country=" + country + ", voivodeship="
 				+ voivodeship + ", counties=" + counties + ", gmine=" + gmine + ", city=" + city + ", postcode="
 				+ postcode + ", street=" + street + ", houseNumber=" + houseNumber + "]";
 	}

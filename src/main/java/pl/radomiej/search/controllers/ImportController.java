@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.radomiej.search.domains.ImportResult;
 import pl.radomiej.search.services.ImporterService;
+import pl.radomiej.search.services.PostalcodesFixService;
 
 @RestController
 @RequestMapping("/import")
@@ -15,9 +16,19 @@ public class ImportController {
 	
 	@Autowired
 	private ImporterService importerService;
+
+	@Autowired
+	private PostalcodesFixService postalcodesFixService;
 	
-	@RequestMapping("")
+	@RequestMapping("/fromFile")
 	public ImportResult importAddresses(@QueryParam(value = "path") String path) {
+		if(path == null || path.isEmpty()) return new ImportResult();
 		return importerService.importAddresses(path);
+	}
+
+	@RequestMapping("/fixBadPostals")
+	public ImportResult importAddresses() {
+		postalcodesFixService.fixPostalcodes();
+		return new ImportResult();
 	}
 }
