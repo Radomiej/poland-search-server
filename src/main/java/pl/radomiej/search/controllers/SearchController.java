@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.radomiej.search.domains.AddressNode;
 import pl.radomiej.search.domains.SearchResult;
-import pl.radomiej.search.elastic.repo.HouseElsticsearchRepository;
+import pl.radomiej.search.elasticsearch.repositories.HouseElsticsearchRepository;
 
 @RestController
 @RequestMapping("/search")
@@ -87,7 +87,7 @@ public class SearchController {
 
 		// Collection<CodikHouseNumberNode2> housesResult =
 		// houseRepository.findByStreet(ulica);
-		// Collection<CodikHouseNumberNode> housesResult =
+		// Collection<CodgikHouseNumberNode> housesResult =
 		// houseRepository.search(wojewodztwo, powiat, gmina, miasto,
 		// kodPocztowy, ulica, numerDomu);
 

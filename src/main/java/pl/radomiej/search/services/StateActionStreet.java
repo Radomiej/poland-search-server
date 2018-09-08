@@ -14,17 +14,17 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 
-import pl.radomiej.search.domains.CodikStreetNode;
+import pl.radomiej.search.domains.CodgikStreetNode;
 
 public enum StateActionStreet {
 	NONE {
 		@Override
-		public void procces(CodikStreetNode node, String text) {
+		public void procces(CodgikStreetNode node, String text) {
 		}
 	},
 	LINIA {
 		@Override
-		public void procces(CodikStreetNode node, String text) {
+		public void procces(CodgikStreetNode node, String text) {
 
 			List<Coordinate> coordinates = new LinkedList<Coordinate>();
 			String[] coordsy = text.split(" ");
@@ -58,5 +58,5 @@ public enum StateActionStreet {
 	};
 	private static GeometryFactory fact = new GeometryFactory();
 
-	public abstract void procces(CodikStreetNode node, String text);
+	public abstract void procces(CodgikStreetNode node, String text);
 }

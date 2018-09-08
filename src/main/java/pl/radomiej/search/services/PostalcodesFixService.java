@@ -1,6 +1,5 @@
 package pl.radomiej.search.services;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +13,9 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 import pl.radomiej.search.domains.AddressNode;
-import pl.radomiej.search.domains.SearchResult;
-import pl.radomiej.search.elastic.repo.HouseElsticsearchRepository;
-import pl.radomiej.search.tools.SearchHitIterator;
+import pl.radomiej.search.elasticsearch.repositories.HouseElsticsearchRepository;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 

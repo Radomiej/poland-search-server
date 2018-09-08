@@ -1,16 +1,27 @@
 package pl.radomiej.search.domains;
 
 
-import org.springframework.data.elasticsearch.annotations.Document;
-
-//@Entity
-public class CodikHouseNumberNode {
+public class CodgikStreetNode {
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+
 	private double latitude, longitude;
+
 //	@Column(columnDefinition = "TEXT")
-	private String country, city, place, province, gmine, counties, postcode, street, houseNumber;
+	private String country, city, place, province, gmine, counties, postcode, street;
+
+//	@Lob
+//	@Column(length = 100000)
+	private String line;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public double getLatitude() {
 		return latitude;
@@ -44,30 +55,6 @@ public class CodikHouseNumberNode {
 		this.city = city;
 	}
 
-	public String getPostcode() {
-		return postcode;
-	}
-
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
 	public String getPlace() {
 		return place;
 	}
@@ -84,14 +71,6 @@ public class CodikHouseNumberNode {
 		this.province = province;
 	}
 
-	public String getCounties() {
-		return counties;
-	}
-
-	public void setCounties(String counties) {
-		this.counties = counties;
-	}
-
 	public String getGmine() {
 		return gmine;
 	}
@@ -100,12 +79,35 @@ public class CodikHouseNumberNode {
 		this.gmine = gmine;
 	}
 
-	public String getHouseNumber() {
-		return houseNumber;
+	public String getCounties() {
+		return counties;
 	}
 
-	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
+	public void setCounties(String counties) {
+		this.counties = counties;
 	}
 
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getLine() {
+		return line;
+	}
+
+	public void setLine(String line) {
+		this.line = line;
+	}
 }

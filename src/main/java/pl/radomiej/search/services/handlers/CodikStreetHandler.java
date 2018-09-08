@@ -5,7 +5,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import pl.radomiej.search.domains.CodikHouseNumberNode;
+import pl.radomiej.search.domains.CodgikHouseNumberNode;
 import pl.radomiej.search.services.StateActionStreet;
 
 
@@ -14,12 +14,12 @@ public class CodikStreetHandler extends DefaultHandler{
 
 	private String normalize = "";
 	private StateActionStreet currentState = StateActionStreet.NONE;
-	private CodikHouseNumberNode node;
+	private CodgikHouseNumberNode node;
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 //		if (qName.equals("prg-ad:PRG_UlicaNazwa")) {
-//			node = new CodikHouseNumberNode();
+//			node = new CodgikHouseNumberNode();
 //		} else if (qName.equals("prg-ad:jednostkaAdmnistracyjna")) {
 //			currentState = StateActionStreet.ADMINISTRACJA;
 //		} else if (qName.equals("prg-ad:miejscowosc")) {

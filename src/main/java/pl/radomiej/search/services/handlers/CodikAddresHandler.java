@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import pl.radomiej.search.domains.AddressNode;
 import pl.radomiej.search.domains.ImportResult;
-import pl.radomiej.search.elastic.repo.HouseElsticsearchRepository;
+import pl.radomiej.search.elasticsearch.repositories.HouseElsticsearchRepository;
 import pl.radomiej.search.services.StateActionAddress;
-import sun.nio.ch.ThreadPool;
 
 
 @Service

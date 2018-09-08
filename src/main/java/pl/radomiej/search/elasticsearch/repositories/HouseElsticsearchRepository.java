@@ -1,4 +1,4 @@
-package pl.radomiej.search.elastic.repo;
+package pl.radomiej.search.elasticsearch.repositories;
 
 import java.util.Collection;
 import java.util.List;

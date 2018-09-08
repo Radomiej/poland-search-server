@@ -14,11 +14,15 @@ import com.google.common.io.Files;
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration;
 import pl.radomiej.search.services.ImporterService;
+import pl.radomiej.search.services.PostalcodesFixService;
 
 @SpringBootApplication(exclude = {ElasticsearchAutoConfiguration.class, ElasticsearchDataAutoConfiguration.class})
 public class GeocodePolandSearchApplication implements CommandLineRunner{
 	@Autowired
 	private ImporterService importService;
+
+	@Autowired
+	private PostalcodesFixService postalcodesFixService;
 	
 	private boolean importCodik;
 	
@@ -44,9 +48,11 @@ public class GeocodePolandSearchApplication implements CommandLineRunner{
 		}
 
 		for (String path : files) {
-			System.out.println("Wczytuje: " + path);
+			System.out.println("Importing: " + path);
 			importService.importAddresses(path);	
-			System.out.println("Wczytano: " + path);
+			System.out.println("Imported: " + path);
 		}
+
+		postalcodesFixService.fixPostalcodes();
 	}
 }

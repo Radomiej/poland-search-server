@@ -1,27 +1,16 @@
 package pl.radomiej.search.domains;
 
 
-public class CodikStreetNode {
+import org.springframework.data.elasticsearch.annotations.Document;
+
+//@Entity
+public class CodgikHouseNumberNode {
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
 	private double latitude, longitude;
-
 //	@Column(columnDefinition = "TEXT")
-	private String country, city, place, province, gmine, counties, postcode, street;
-
-//	@Lob
-//	@Column(length = 100000)
-	private String line;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	private String country, city, place, province, gmine, counties, postcode, street, houseNumber;
 
 	public double getLatitude() {
 		return latitude;
@@ -55,6 +44,30 @@ public class CodikStreetNode {
 		this.city = city;
 	}
 
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
 	public String getPlace() {
 		return place;
 	}
@@ -71,14 +84,6 @@ public class CodikStreetNode {
 		this.province = province;
 	}
 
-	public String getGmine() {
-		return gmine;
-	}
-
-	public void setGmine(String gmine) {
-		this.gmine = gmine;
-	}
-
 	public String getCounties() {
 		return counties;
 	}
@@ -87,27 +92,20 @@ public class CodikStreetNode {
 		this.counties = counties;
 	}
 
-	public String getPostcode() {
-		return postcode;
+	public String getGmine() {
+		return gmine;
 	}
 
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
+	public void setGmine(String gmine) {
+		this.gmine = gmine;
 	}
 
-	public String getStreet() {
-		return street;
+	public String getHouseNumber() {
+		return houseNumber;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 
-	public String getLine() {
-		return line;
-	}
-
-	public void setLine(String line) {
-		this.line = line;
-	}
 }

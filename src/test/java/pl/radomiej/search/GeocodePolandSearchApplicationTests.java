@@ -17,7 +17,7 @@ import com.google.common.io.Files;
 import pl.radomiej.search.controllers.SearchController;
 import pl.radomiej.search.domains.AddressNode;
 import pl.radomiej.search.domains.SearchResult;
-import pl.radomiej.search.elastic.repo.HouseElsticsearchRepository;
+import pl.radomiej.search.elasticsearch.repositories.HouseElsticsearchRepository;
 import pl.radomiej.search.services.ImporterService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
