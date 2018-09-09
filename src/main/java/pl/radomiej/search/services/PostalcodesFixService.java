@@ -4,6 +4,7 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
@@ -17,7 +18,11 @@ import pl.radomiej.search.elasticsearch.repositories.HouseElsticsearchRepository
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 import static org.elasticsearch.index.query.QueryBuilders.simpleQueryStringQuery;
@@ -30,6 +35,8 @@ public class PostalcodesFixService {
     @Autowired
     private ElasticsearchOperations elasticsearchTemplate;
 
+    private ExecutorService executorFixer = Executors.newFixedThreadPool(10);
+    private ExecutorService executor = Executors.newFixedThreadPool(20);
 
     public void init() {
         //TODO move to constructor and check that it work
@@ -39,37 +46,67 @@ public class PostalcodesFixService {
     }
 
     public void fixPostalcodes() {
-        Page<AddressNode> badPostalNodes = findBadPostalNodes();
 
+       int concurrentFix = 10;
+        while (true) {
+            CountDownLatch doneSignal = new CountDownLatch(concurrentFix);
+            for (int page = 0; page < concurrentFix; page++) {
+                final List<AddressNode> badPostalNodes = findBadPostalNodes(page);
+                if(badPostalNodes.size() == 0) return;
 
-        //Fast fix
-        Pageable pageable = badPostalNodes.getPageable();
-        while (true){
-            badPostalNodes = houseRepository.findAll(pageable);
-            if(badPostalNodes.getSize() == 0) break;
-            for (AddressNode badNode : badPostalNodes) {
-//                System.out.println("Iterate over badNode");
-                List<AddressNode> nearestNodes = findNearest(badNode.getPosition(), 50);
-                for (AddressNode nearest : nearestNodes) {
-                    if (nearest.getPostcode() != null && !nearest.getPostcode().isEmpty() && !nearest.getPostcode().equalsIgnoreCase("00-000")) {
-                        badNode.setPostcode(nearest.getPostcode());
-                        houseRepository.save(badNode);
-//                        System.out.println("Fix postcode from: " + badNode + " to: " + nearest);
-                        break;
-                    }
-                }
+                executor.submit(() -> fixPage(badPostalNodes, doneSignal));
+                //fixPage(badPostalNodes);
             }
-            pageable = pageable.next();
-            if(pageable == null) break;
+            try {
+                doneSignal.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
+    }
 
-        //Full fix
+    private void fixPage(List<AddressNode> badPostalNodes, CountDownLatch doneSignal) {
+        if (badPostalNodes.size() == 0) return;
+        for (AddressNode badNode : badPostalNodes) {
+//                System.out.println("Iterate over badNode: " +);
+            if (fixPostalcode(badNode, 50)) ;
+            else if (fixPostalcode(badNode, 150)) ;
+            else if (fixPostalcode(badNode, 500)) ;
+            else if (fixPostalcode(badNode, 2500)) ;
+            else {
+                System.out.println("Nie można naprawić kodu: " + badNode);
+            }
+
+        }
+
+        //save rest
+        doneSignal.countDown();
+    }
+
+    private void save(AddressNode nodeToSave) {
+//        System.out.println("Wysyłam");
+        houseRepository.save(nodeToSave);
+    }
+
+    private boolean fixPostalcode(AddressNode badNode, int distance) {
+        List<AddressNode> nearestNodes = findNearest(badNode.getPosition(), distance);
+        for (AddressNode nearest : nearestNodes) {
+            if (nearest.getPostcode() != null && !nearest.getPostcode().isEmpty() && !nearest.getPostcode().equalsIgnoreCase("00-000")) {
+                System.out.println("Fix postcode on distance: " + distance + " from: " + badNode + " to: " + nearest);
+                badNode.setPostcode(nearest.getPostcode());
+                executor.submit(() -> save(badNode));
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private List<AddressNode> findNearest(GeoPoint position, int searchDistanceInMeters) {
         CriteriaQuery geoLocationCriteriaQuery = new CriteriaQuery(
                 new Criteria("position").within(position, searchDistanceInMeters + "m"));
+        geoLocationCriteriaQuery.setPageable(PageRequest.of(0, 10000));
         List<AddressNode> searchNearesCriteria = elasticsearchTemplate.queryForList(geoLocationCriteriaQuery,
                 AddressNode.class);
 
@@ -98,21 +135,9 @@ public class PostalcodesFixService {
     }
 
 
-    private Page<AddressNode> findBadPostalNodes() {
-        NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
+    private List<AddressNode> findBadPostalNodes(int page) {
 
-        BoolQueryBuilder boolQueryBulider = boolQuery();
-        builder.withQuery(boolQueryBulider);
-
-        QueryBuilder queryPostcode = simpleQueryStringQuery("00-000").field("postcode");
-        boolQueryBulider.must(queryPostcode);
-
-        SearchQuery searchQuery = builder.build();
-        System.out.println("query: " + searchQuery.getQuery().toString());
-//        List<AddressNode> housesResult = houseRepository.findAllByPostcode("00-000");
-
-//        SearchHitIterator hitIterator = new SearchHitIterator(searchQuery);
-        Page<AddressNode> housesResult = houseRepository.search(searchQuery);
+        List<AddressNode> housesResult = houseRepository.findAllByPostcode("00-000", PageRequest.of(page, 1000));
 
         return housesResult;
     }

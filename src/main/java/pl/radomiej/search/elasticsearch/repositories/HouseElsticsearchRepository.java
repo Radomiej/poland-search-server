@@ -17,5 +17,7 @@ public interface HouseElsticsearchRepository extends ElasticsearchRepository<Add
 
     List<AddressNode> findAllByPostcode(String postcode);
 
+    List<AddressNode> findAllByPostcode(String postcode, Pageable pageable);
+
     Page<AddressNode> findAll(Pageable pageRequest);
 }
