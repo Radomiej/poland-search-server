@@ -16,6 +16,7 @@
 		<geotools.version>2.7-M2</geotools.version>
 		<osmosis.version>0.44.1</osmosis.version>
 		<guava.version>19.0</guava.version>
+		<geotools.version>16.2</geotools.version>
 	</properties>
 
 	<parent>
@@ -58,11 +59,31 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<!-- Geotools -->
 		<dependency>
-			<groupId>pl.fluence</groupId>
-			<artifactId>fluence-osm-data-collector</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-epsg-hsql</artifactId>
+			<version>${geotools.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-referencing</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-main</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-referencing</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
