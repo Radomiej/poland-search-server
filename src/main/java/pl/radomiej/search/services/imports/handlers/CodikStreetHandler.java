@@ -1,4 +1,4 @@
-package pl.radomiej.search.services.handlers;
+package pl.radomiej.search.services.imports.handlers;
 
 import org.springframework.stereotype.Service;
 import org.xml.sax.Attributes;
@@ -6,7 +6,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import pl.radomiej.search.domains.CodgikHouseNumberNode;
-import pl.radomiej.search.services.StateActionStreet;
+import pl.radomiej.search.services.imports.states.StateActionStreet;
 
 
 @Service

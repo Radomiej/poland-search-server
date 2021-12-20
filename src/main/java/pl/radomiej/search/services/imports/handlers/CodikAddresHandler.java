@@ -1,4 +1,4 @@
-package pl.radomiej.search.services.handlers;
+package pl.radomiej.search.services.imports.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import pl.radomiej.search.domains.AddressNode;
 import pl.radomiej.search.domains.ImportResult;
 import pl.radomiej.search.elasticsearch.repositories.HouseElsticsearchRepository;
-import pl.radomiej.search.services.StateActionAddress;
+import pl.radomiej.search.services.imports.states.StateActionAddress;
 
 
 @Service

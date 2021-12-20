@@ -14,11 +14,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.google.common.io.Files;
 
+import pl.radomiej.search.controllers.ReverseGeocodingController;
 import pl.radomiej.search.controllers.SearchController;
 import pl.radomiej.search.domains.AddressNode;
 import pl.radomiej.search.domains.SearchResult;
 import pl.radomiej.search.elasticsearch.repositories.HouseElsticsearchRepository;
-import pl.radomiej.search.services.ImporterService;
+import pl.radomiej.search.services.imports.ImporterService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -31,25 +32,16 @@ public class GeocodePolandSearchApplicationTests {
 	private SearchController searchController;
 
 	@Autowired
+	private ReverseGeocodingController reverseGeocodingController;
+
+	@Autowired
 	private HouseElsticsearchRepository houseRepo;
 	
 	@Autowired
 	private ElasticsearchOperations elasticsearchTemplate;
 	
-	@Test
+//	@Test
 	public void contextLoads() {
-		// importService.importTeryt("G:\\PunktyAdresowePolska\\TERYT\\TERC.xml");
-		// importService.importUlic("G:\\PunktyAdresowePolska\\TERYT\\ULIC.xml");
-		// try {
-		// importService.importSimc("G:\\PunktyAdresowePolska\\TERYT\\SIMC.xml");
-		// } catch (ParserConfigurationException | SAXException | IOException e)
-		// {
-		// e.printStackTrace();
-		// }
-		elasticsearchTemplate.createIndex(AddressNode.class);
-		elasticsearchTemplate.refresh(AddressNode.class);
-		elasticsearchTemplate.putMapping(AddressNode.class);
-		
 		List<String> files = new ArrayList<>();
 		File root = new File("H:\\mapy\\punkty_adresowe");
 		for (File file : root.listFiles()) {
@@ -74,10 +66,9 @@ public class GeocodePolandSearchApplicationTests {
 		contextLoads2();
 	}
 	
-//	@Test
+	@Test
 	public void contextLoads2() {
 		System.out.println("Szukam");
-//		Collection<SearchResult> results = searchController.search("lubuskie", "", "", "Przysieka", "", "", "2");
 		Collection<SearchResult> results = searchController.search("lubuskie", "", "", "Gorzów", "", "Korcza", "33");
 		System.out.println("Wyniki wyszukiwania: " + results.size());
 		for(SearchResult sr : results){
@@ -85,16 +76,12 @@ public class GeocodePolandSearchApplicationTests {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void reverseGeocodeTest() {
 		System.out.println("Szukam");
-		SearchResult result = searchController.reverseSearch(52.757625, 15.262086);
+		SearchResult result = reverseGeocodingController.reverseSearch(52.87637051101798, 15.530304158160467);
 		System.out.println("Wynik wyszukiwania: " + result);
 		
 	}
 	
-//	@Test
-	public void fakeTest() {
-		
-	}
 }

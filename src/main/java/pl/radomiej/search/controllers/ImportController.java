@@ -1,14 +1,13 @@
 package pl.radomiej.search.controllers;
 
-import javax.ws.rs.QueryParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.radomiej.search.domains.ImportResult;
-import pl.radomiej.search.services.ImporterService;
-import pl.radomiej.search.services.PostalcodesFixService;
+import pl.radomiej.search.services.imports.ImporterService;
+import pl.radomiej.search.services.imports.PostalcodesFixService;
 
 @RestController
 @RequestMapping("/import")
@@ -21,7 +20,7 @@ public class ImportController {
 	private PostalcodesFixService postalcodesFixService;
 	
 	@RequestMapping("/fromFile")
-	public ImportResult importAddresses(@QueryParam(value = "path") String path) {
+	public ImportResult importAddresses(@RequestParam(value = "path") String path) {
 		if(path == null || path.isEmpty()) return new ImportResult();
 		return importerService.importAddresses(path);
 	}

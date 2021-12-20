@@ -1,4 +1,4 @@
-package pl.radomiej.search.services;
+package pl.radomiej.search.services.imports.states;
 
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;

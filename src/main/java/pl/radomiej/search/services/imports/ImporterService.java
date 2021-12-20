@@ -1,4 +1,4 @@
-package pl.radomiej.search.services;
+package pl.radomiej.search.services.imports;
 
 
 import java.io.File;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.radomiej.search.domains.ImportResult;
-import pl.radomiej.search.services.handlers.CodikAddresHandler;
+import pl.radomiej.search.services.imports.handlers.CodikAddresHandler;
 
 @Service
 public class ImporterService {

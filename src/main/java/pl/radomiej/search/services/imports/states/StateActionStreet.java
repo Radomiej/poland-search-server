@@ -1,4 +1,4 @@
-package pl.radomiej.search.services;
+package pl.radomiej.search.services.imports.states;
 
 import java.util.LinkedList;
 import java.util.List;

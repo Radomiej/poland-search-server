@@ -1,4 +1,4 @@
-package pl.radomiej.search.services;
+package pl.radomiej.search.services.imports;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;

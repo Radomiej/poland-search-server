@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,10 +14,11 @@ import com.google.common.io.Files;
 
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration;
-import pl.radomiej.search.services.ImporterService;
-import pl.radomiej.search.services.PostalcodesFixService;
+import pl.radomiej.search.services.imports.ImporterService;
+import pl.radomiej.search.services.imports.PostalcodesFixService;
 
 @SpringBootApplication(exclude = {ElasticsearchAutoConfiguration.class, ElasticsearchDataAutoConfiguration.class})
+@Slf4j
 public class GeocodePolandSearchApplication implements CommandLineRunner{
 	@Autowired
 	private ImporterService importService;
@@ -48,9 +50,9 @@ public class GeocodePolandSearchApplication implements CommandLineRunner{
 		}
 
 		for (String path : files) {
-			System.out.println("Importing: " + path);
-			importService.importAddresses(path);	
-			System.out.println("Imported: " + path);
+			log.info("Importing: " + path);
+			importService.importAddresses(path);
+			log.info("Imported: " + path);
 		}
 
 		postalcodesFixService.fixPostalcodes();
